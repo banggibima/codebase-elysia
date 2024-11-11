@@ -1,7 +1,7 @@
-import { UserService } from "../../domain/service";
 import { UserResponseDTO } from "./dto";
+import UserService from "../../domain/service";
 
-export class UserQueryUseCase {
+class UserQueryUseCase {
   constructor(private userService: UserService) {}
 
   async count(): Promise<number> {
@@ -57,3 +57,5 @@ export class UserQueryUseCase {
     return response;
   }
 }
+
+export default UserQueryUseCase;
