@@ -1,12 +1,12 @@
 import { Elysia, t } from "elysia";
-import { UserCommandUseCase } from "../application/command/usecase";
-import { UserQueryUseCase } from "../application/query/usecase";
-import { UserService } from "../domain/service";
-import { UserPostgresRepositoryImpl } from "./repository/postgres";
 import wrapper from "../../../core/utils/wrapper";
+import UserPostgresRepositoryImpl from "./repository/postgres";
+import UserService from "../domain/service";
+import UserCommandUseCase from "../application/command/usecase";
+import UserQueryUseCase from "../application/query/usecase";
 
-const postgresUserRepository = new UserPostgresRepositoryImpl();
-const userService = new UserService(postgresUserRepository);
+const userPostgresRepository = new UserPostgresRepositoryImpl();
+const userService = new UserService(userPostgresRepository);
 const userCommandUseCase = new UserCommandUseCase(userService);
 const userQueryUseCase = new UserQueryUseCase(userService);
 
@@ -65,6 +65,25 @@ user
     {
       params: t.Object({
         id: t.String(),
+      }),
+    }
+  )
+  .get(
+    "/email/:email",
+    async ({ params, set }) => {
+      const user = await userQueryUseCase.findByEmail(params.email);
+      if (user === null) {
+        set.status = 404;
+        const error = wrapper.error(404, "user not found");
+        return error;
+      }
+      set.status = 200;
+      const success = wrapper.detail(200, user);
+      return success;
+    },
+    {
+      params: t.Object({
+        email: t.String(),
       }),
     }
   )
