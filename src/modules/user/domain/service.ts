@@ -1,7 +1,7 @@
 import { User } from "./entity";
 import { UserPostgresRepository } from "./repository";
 
-export class UserService {
+class UserService {
   constructor(private userPostgresRepository: UserPostgresRepository) {}
 
   async count() {
@@ -32,3 +32,5 @@ export class UserService {
     return this.userPostgresRepository.remove(payload);
   }
 }
+
+export default UserService;
