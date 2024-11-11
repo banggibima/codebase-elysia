@@ -1,9 +1,9 @@
 import { Elysia, t } from "elysia";
-import wrapper from "../../../core/utils/wrapper";
 import UserPostgresRepositoryImpl from "./repository/postgres";
 import UserService from "../domain/service";
 import UserCommandUseCase from "../application/command/usecase";
 import UserQueryUseCase from "../application/query/usecase";
+import wrapper from "../../../core/utils/wrapper";
 
 const userPostgresRepository = new UserPostgresRepositoryImpl();
 const userService = new UserService(userPostgresRepository);
