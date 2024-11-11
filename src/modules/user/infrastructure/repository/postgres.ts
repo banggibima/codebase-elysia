@@ -1,9 +1,8 @@
 import { User } from "../../domain/entity";
 import { UserPostgresRepository } from "../../domain/repository";
 import sql from "../../../../core/database/postgres";
-import user from "../handler";
 
-export class UserPostgresRepositoryImpl implements UserPostgresRepository {
+class UserPostgresRepositoryImpl implements UserPostgresRepository {
   async count(): Promise<number> {
     const query = await sql<{ count: string }[]>`
       SELECT COUNT(*) FROM users
@@ -117,3 +116,5 @@ export class UserPostgresRepositoryImpl implements UserPostgresRepository {
     return user;
   }
 }
+
+export default UserPostgresRepositoryImpl;
